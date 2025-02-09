@@ -1,3 +1,5 @@
+const display = document.getElementById('display');
+
 let x;
 let y;
 let operator;
@@ -29,6 +31,18 @@ function operate(x, operator, y) {
     return multiply();
   }
   else if (operator == '/') {
-    return divide();
+    let answer = divide();
+    display.value = answer;
   }
+}
+
+function populateDisplay(num) {
+
+  let currentValue = display.value;
+
+  display.value = currentValue + num;
+}
+
+function clearDisplay() {
+  display.value = '';
 }
