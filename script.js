@@ -21,26 +21,52 @@ function divide(x, y) {
 }
 
 function operate(x, operator, y) {
-  if (operator == '+') {
-    return add();
+  
+  let expression = display.value;
+
+  let operatorIndex = expression.indexOf('+') !== -1 ? expression.indexOf('+') :
+                      expression.indexOf('-') !== -1 ? expression.indexOf('-') :
+                      expression.indexOf('*') !== -1 ? expression.indexOf('*') :
+                      expression.indexOf('/') !== -1 ? expression.indexOf('/') :
+                      -1;
+  if (operatorIndex === -1) {
+    display.value = 'Error';
+    return;
   }
-  else if (operator == '-') {
-    return subtract();
+
+  x = parseFloat(expression.slice(0, operatorIndex));
+  operator = expression[operatorIndex];
+  y = parseFloat(expression.slice(operatorIndex + 1));
+
+  if (isNaN(x) || isNaN(y)) {
+    display.value = 'Error';
+    return;
   }
-  else if (operator == '*') {
-    return multiply();
+
+  let result;
+
+  switch (operator) {
+    case '+':
+    result = add(x, y)
+    break;
+    case '-':
+    result = subtract(x, y)
+    break;
+    case '*':
+    result = multiply(x, y)
+    break;
+    case '/':
+    result = divide(x, y)
+    break;
+    default:
+      result = 'Error';
   }
-  else if (operator == '/') {
-    let answer = divide();
-    display.value = answer;
-  }
+
+  display.value = result;
 }
 
-function populateDisplay(num) {
-
-  let currentValue = display.value;
-
-  display.value = currentValue + num;
+function populateDisplay(value) {
+  display.value += value;
 }
 
 function clearDisplay() {
